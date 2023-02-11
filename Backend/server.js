@@ -1,4 +1,10 @@
-const io = require('socket.io');
+const app = require('express')();
+const httpServer = require('http').Server(app);
+const io = require('socket.io')(httpServer, {
+    cors: {
+        origin: '*',
+    }
+});
 const PORT = 3000;
 
 io.on('connection', (socket) => {
@@ -15,6 +21,5 @@ io.on('connection', (socket) => {
       console.log('Conexión cerrada');
     });
   });
-  
   io.listen(PORT);
   console.log('Servidor de sockets escuchando en el puerto 3000');
