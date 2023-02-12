@@ -1,1 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#boards
+{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+#boards > div
+{
+    width: 100%;
+    height: auto;
+}
+.boardComponent
+{
+    max-width: 450px;
+    min-width: 250px;
+    width: 45%;
+    margin: 1em 0;
+}

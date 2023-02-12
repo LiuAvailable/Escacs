@@ -1,0 +1,7 @@
+<section class="cheesBoard">
+    <ul>
+        <li *ngFor="let row of [].constructor(8); let i = index" [attr.row-number]="i+1">
+            <div *ngFor="let square of [].constructor(8); let j = index" class="square" [attr.square-number]="j+1"></div>
+        </li>
+    </ul>
+</section>
