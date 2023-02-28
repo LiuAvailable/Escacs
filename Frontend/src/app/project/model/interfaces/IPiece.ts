@@ -1,7 +1,8 @@
 export interface IPiece {
+    id:number;
     img: string;
     color: string;
-    position: number;
 
+    setImg():void;
     move(): void; // change piece position
 }

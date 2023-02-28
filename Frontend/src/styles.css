@@ -18,10 +18,3 @@
     width: 100%;
     height: auto;
 }
-.boardComponent
-{
-    max-width: 450px;
-    min-width: 250px;
-    width: 45%;
-    margin: 1em 0;
-}
