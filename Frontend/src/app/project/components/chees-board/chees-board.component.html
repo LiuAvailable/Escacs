@@ -1,17 +1,8 @@
-<section class="cheesBoard" *ngIf="this.variation != 'girat'; else taulerGirat">
-    <div class="row" *ngFor="let row of this.cheesBoard.getTauler()">
+<section class="cheesBoard">
+    <div class="row" *ngFor="let row of this.cheesBoard.getTauler(this.variation)">
         <div class="square" *ngFor="let square of row" [attr.id-square-letter]="square.id.substr(1, 1)" [attr.id-square-num]="square.id.substr(0, 1)">
             <img *ngIf="square.occupied" src={{square.piece.img}}/>
         </div>
     </div>
 </section>
-<ng-template #taulerGirat>
-    <section class="cheesBoard">
-        <div class="row" *ngFor="let row of this.cheesBoard.getTauler().reverse()">
-            <div class="square" *ngFor="let square of row.reverse()" [attr.id-square-letter]="square.id.substr(1, 1)" [attr.id-square-num]="square.id.substr(0, 1)">
-                <img *ngIf="square.occupied" src={{square.piece.img}}/>
-            </div>
-        </div>
-    </section> 
-</ng-template>
 

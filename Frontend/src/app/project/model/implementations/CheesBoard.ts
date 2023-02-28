@@ -30,7 +30,7 @@ export class CheesBoard implements ICheesBoard {
 
     generatePieces(): void {
         const TOTAL_PIECES = 16;
-        const COLORS = ['White', 'Black'];
+        const COLORS = ['Black', 'White'];
 
         COLORS.forEach(color => {
             for (let i = 0; i < TOTAL_PIECES; i++) {
@@ -57,7 +57,13 @@ export class CheesBoard implements ICheesBoard {
     }
 
 
-    public getTauler(): Array<Array<Square>> { return this.caselles; }
+    public getTauler(type:string): Array<Array<Square>> {
+        let array:Array<Array<Square>> = []
+        if (type == 'girat'){
+            this.caselles.reverse().forEach(row => array.push(row.reverse()))
+        } else array = this.caselles; 
+        return array;
+    }
 
 
 
