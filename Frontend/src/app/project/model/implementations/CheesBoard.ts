@@ -12,7 +12,8 @@ export class CheesBoard implements ICheesBoard {
     constructor(){
         this.generateSquares();
         this.generatePieces();
-        this.placePieces()
+        this.placePieces();
+        console.log(this.pieces)
     }
 
     generateSquares(): void {
@@ -32,9 +33,11 @@ export class CheesBoard implements ICheesBoard {
         const TOTAL_PIECES = 16;
         const COLORS = ['Black', 'White'];
 
+        let round= -1; // per fer ids de 1 a 32
         COLORS.forEach(color => {
-            for (let i = 0; i < TOTAL_PIECES; i++) {
-                let piece = new Piece(i, color)
+            round++;
+            for (let i = 1; i <= TOTAL_PIECES; i++) {
+                let piece = new Piece(i+(TOTAL_PIECES*round), color)
                 this.pieces.push(piece);
             }
         });
@@ -42,18 +45,22 @@ export class CheesBoard implements ICheesBoard {
 
     placePieces():void{
         let voltes = 2
-        /* BLANQUES */
+        /* BLANQUES
+         * Primera volta id peça 0 - 7
+         * Segona volta id peça 8 - 15
+         * i = 1 pq sino el primer sempre es 0
+         */
         for (let row = 0; row < voltes; row++){
-            for (let i = 0; i < this.caselles.length; i++){
-                this.caselles[row][i].occupy(this.pieces[i*(row+1)])
+            for (let i = 1; i <= this.caselles.length; i++){
+                this.caselles[row][i-1].occupy(this.pieces[i+(row*8)-1])
             }
         }
         /* NEGRES */
-        for (let row = this.caselles.length-1; row > this.caselles.length-voltes-1; row-=1){
-            for (let i = 0; i < this.caselles.length; i++){
-                this.caselles[row][i].occupy(this.pieces[31-i*(this.caselles.length-row)])
+        for (let row = 0; row < voltes; row++){
+            for (let i = this.pieces.length; i > 24; i--){
+                this.caselles[7-row][32-i].occupy(this.pieces[i-(row*8)-1])
             }
-        }
+        }   
     }
 
 
