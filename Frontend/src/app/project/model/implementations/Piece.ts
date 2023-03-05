@@ -22,8 +22,4 @@ export class Piece implements IPiece{
             else this.img = `../../../../assets/img/caball${color}.png`; // caballs
         } else this.img = `../../../../assets/img/peo${color}.png`;
     }
-
-    move(): void {
-        throw new Error("Method not implemented.");
-    }
 }

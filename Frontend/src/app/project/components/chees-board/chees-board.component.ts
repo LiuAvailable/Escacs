@@ -15,10 +15,8 @@ export class CheesBoardComponent {
   cheesBoard: CheesBoard = new CheesBoard();
   graveyard:Array<Graveyard> = [new Graveyard('White', 2, 8), new Graveyard('Black', 2, 8)]
 
-
   constructor() {
   }
-
 
   /**
    * Returns one color graveyard
@@ -39,10 +37,25 @@ export class CheesBoardComponent {
   }
 
 
+  move(){
+    // if square occupied
+    const square1 = this.cheesBoard.caselles[1][4]
+    const square2 = this.cheesBoard.caselles[6][3]
+    this.kill(square1)
+    this.kill(square2)
+  }
+
+  kill(square:Square){
+    let peca = square.piece;
+    square.occupied = false;
+
+    if(peca.color == 'Black') this.graveyard[1].kill(peca)
+    else this.graveyard[0].kill(peca)
+  }
+
   drop(event: any) {
     console.log(event)
     //this.draggedSquare = square;
   }
-
 
 }

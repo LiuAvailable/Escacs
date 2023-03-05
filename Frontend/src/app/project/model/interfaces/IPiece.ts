@@ -4,5 +4,4 @@ export interface IPiece {
     color: string;
 
     setImg():void;
-    move(): void; // change piece position
 }
