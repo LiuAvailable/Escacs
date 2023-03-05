@@ -13,7 +13,6 @@ export class CheesBoard implements ICheesBoard {
         this.generateSquares();
         this.generatePieces();
         this.placePieces();
-        console.log(this.pieces)
     }
 
     generateSquares(): void {

@@ -13,7 +13,6 @@ export class Square implements ISquare{
     occupy(piece:Piece): void {
         this.piece = piece;
         this.occupied = true;
-        console.log(`${this.id} -> ${this.piece.id}`);
     }
     
 }

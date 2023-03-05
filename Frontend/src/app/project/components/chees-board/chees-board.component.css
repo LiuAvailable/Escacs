@@ -3,6 +3,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    margin: 5vh 0;
 }
 .row
 {
@@ -24,6 +25,10 @@
     height: 40px;
     width: auto;
 }
+
+.graveyard .square{background-color: #8A0426;}
+.graveyard .row:nth-child(2n) .square:nth-child(2n){background-color: #CB1D11;}
+.graveyard .row:nth-child(2n+1) .square:nth-child(2n+1){background-color: #CB1D11;}
 
 .square{background-color: #30AD23;}
 .row:nth-child(2n) .square:nth-child(2n){background-color: #7DF481;}

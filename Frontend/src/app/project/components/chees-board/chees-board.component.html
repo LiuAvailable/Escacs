@@ -1,8 +1,24 @@
+<div class="graveyard" class={{this.getGraveyard(true).color}}>
+    <div *ngFor="let row of this.getGraveyard(true).caselles" class="row">
+        <div class="square" *ngFor="let square of row">
+            <img *ngIf="square.occupied" src={{square.piece.img}} cdkDrag/>
+        </div>
+    </div>
+</div>
+
 <section class="cheesBoard">
     <div class="row" *ngFor="let row of this.cheesBoard.getTauler(this.variation)">
-        <div class="square" *ngFor="let square of row" [attr.id-square-letter]="square.id.substr(1, 1)" [attr.id-square-num]="square.id.substr(0, 1)">
-            <img *ngIf="square.occupied" src={{square.piece.img}}/>
+        <div class="square" *ngFor="let square of row" [attr.id-square-letter]="square.id.substr(1, 1)" [attr.id-square-num]="square.id.substr(0, 1)" cdkDropList [cdkDropListData]="row" (cdkDropListDropped)="drop($event)">
+            <img *ngIf="square.occupied" src={{square.piece.img}} cdkDrag/>
         </div>
     </div>
 </section>
+
+<div class="graveyard" class={{this.getGraveyard(false).color}}>
+    <div *ngFor="let row of this.getGraveyard(false).caselles" class="row">
+        <div class="square" *ngFor="let square of row">
+            <img *ngIf="square.occupied" src={{square.piece.img}} cdkDrag/>
+        </div>
+    </div>
+</div>
 
