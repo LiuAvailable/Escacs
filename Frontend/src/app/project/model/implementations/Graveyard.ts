@@ -29,5 +29,6 @@ export class Graveyard implements IGraveyard{
             posicio = this.morts - rowLen;
         }
         this.caselles[fila][posicio].occupy(peca)
+        this.morts++;
     }
 }
