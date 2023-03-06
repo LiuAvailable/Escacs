@@ -13,7 +13,8 @@ import { Graveyard } from '../../model/implementations/Graveyard';
 export class CheesBoardComponent {
   @Input() variation!: string;
   cheesBoard: CheesBoard = new CheesBoard();
-  graveyard:Array<Graveyard> = [new Graveyard('White', 2, 8), new Graveyard('Black', 2, 8)]
+  graveyard:Array<Graveyard> = [new Graveyard('White', 2, 8), new Graveyard('Black', 2, 8)];
+  lastSquare!:Square;
 
   constructor() {
   }
@@ -36,15 +37,6 @@ export class CheesBoardComponent {
     return graveyard
   }
 
-
-  move(){
-    // if square occupied
-    const square1 = this.cheesBoard.caselles[1][4]
-    const square2 = this.cheesBoard.caselles[6][3]
-    this.kill(square1)
-    this.kill(square2)
-  }
-
   kill(square:Square){
     let peca = square.piece;
     square.occupied = false;
@@ -53,9 +45,25 @@ export class CheesBoardComponent {
     else this.graveyard[0].kill(peca)
   }
 
-  drop(event: any) {
-    console.log(event)
-    //this.draggedSquare = square;
+  drop(square:Square) {
+    if(square.occupied){
+      if(this.lastSquare.piece.color != square.piece.color){
+        this.kill(square);
+        square.occupied = true;
+        square.piece = this.lastSquare.piece;
+        this.lastSquare.occupied = false;
+      }
+    } else {
+      square.occupied = true;
+      square.piece = this.lastSquare.piece;
+      this.lastSquare.occupied = false;
+    }
+  }
+  allowDrop(event:any){
+    event.preventDefault();
+  }
+  dragStart(square:Square){
+    this.lastSquare = square;
   }
 
 }
