@@ -5,17 +5,17 @@
         <form>
             <div class="inputBox">
                 <p>Nom de l'equip</p>
-                <input type="text" name="equip" />
+                <input type="text" #equip />
             </div>
             <div class="inputBox">
                 <p>jugador 1</p>
-                <input type="text" name="player1" />
+                <input type="text" name="player1" #player1/>
             </div>
             <div class="inputBox">
                 <p>jugador 2</p>
-                <input type="text" name="player2" />
+                <input type="text" name="player2" #player2/>
             </div>
-            <button>CREAR</button>
+            <button type="button" (click)="this.createTeam(equip.value, player1.value, player2.value)">CREAR</button>
         </form>
     </div>
 
