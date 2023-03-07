@@ -7,4 +7,5 @@ export interface ISquare{
 
     // method to occupy the square
     occupy(peca:IPiece):void;
+    empty():void;
 }

@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { CheesBoard } from '../../model/implementations/CheesBoard';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Square } from '../../model/implementations/Square';
 import { Graveyard } from '../../model/implementations/Graveyard';
+import { Piece } from '../../model/implementations/Piece';
 
 
 @Component({
@@ -14,7 +14,9 @@ export class CheesBoardComponent {
   @Input() variation!: string;
   cheesBoard: CheesBoard = new CheesBoard();
   graveyard:Array<Graveyard> = [new Graveyard('White', 2, 8), new Graveyard('Black', 2, 8)];
-  lastSquare!:Square;
+  lastSquare!:Square | undefined;
+  pieceOrigin!:string;
+  torn: string = 'White';
 
   constructor() {
   }
@@ -45,25 +47,49 @@ export class CheesBoardComponent {
     else this.graveyard[0].kill(peca)
   }
 
-  drop(square:Square) {
-    if(square.occupied){
-      if(this.lastSquare.piece.color != square.piece.color){
-        this.kill(square);
-        square.occupied = true;
-        square.piece = this.lastSquare.piece;
-        this.lastSquare.occupied = false;
+  checkTorn():boolean{
+    const piece = this.lastSquare?.piece;
+    let correct = false;
+      if(piece != null){
+      if(piece.color == this.torn){
+        correct = true;
+        if(piece.color == 'White')this.torn = 'Black';
+        else this.torn = 'White';
       }
-    } else {
-      square.occupied = true;
-      square.piece = this.lastSquare.piece;
-      this.lastSquare.occupied = false;
     }
+    return correct
   }
+
+  /****************
+     DRAG EVENTS
+  *****************/
+  drop(square:Square) {
+    if(this.checkTorn()){
+      if(this.lastSquare != null){
+        if(square.occupied){
+          if(this.lastSquare.piece.color != square.piece.color){ // enemy piece
+            this.kill(square);
+            square.occupy(this.lastSquare.piece)
+            this.lastSquare.empty();
+          }
+        } else {
+          square.occupy(this.lastSquare.piece)
+          this.lastSquare.empty();
+        }
+      }
+    }
+    this.lastSquare = undefined;
+  }
+
   allowDrop(event:any){
     event.preventDefault();
   }
   dragStart(square:Square){
     this.lastSquare = square;
+  }
+  cancelDrop(event:any){
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'none';
   }
 
 }

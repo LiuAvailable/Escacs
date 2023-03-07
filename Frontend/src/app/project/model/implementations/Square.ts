@@ -14,5 +14,8 @@ export class Square implements ISquare{
         this.piece = piece;
         this.occupied = true;
     }
+    empty():void{
+        this.occupied = false;
+    }
     
 }
