@@ -29,6 +29,7 @@
 .graveyard .square{background-color: #8A0426;}
 .graveyard .row:nth-child(2n) .square:nth-child(2n){background-color: #CB1D11;}
 .graveyard .row:nth-child(2n+1) .square:nth-child(2n+1){background-color: #CB1D11;}
+
 .graveyard .square{background-color: #0071B9;}
 .graveyard .row:nth-child(2n) .square:nth-child(2n){background-color: #04B8F2;}
 .graveyard .row:nth-child(2n+1) .square:nth-child(2n+1){background-color: #04B8F2;}

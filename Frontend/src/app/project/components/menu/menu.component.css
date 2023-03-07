@@ -1,0 +1,85 @@
+section
+{
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10vh 0;
+}
+#equips
+{
+    width: 100vw;
+    height: 20vh;
+}
+
+#form
+{
+    position: relative;
+    width: 60vw;
+    border-radius: 20px;
+    background: rgba(128, 64, 4, .2);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 2em;
+}
+form
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.inputBox:first-child{margin-top: 2vh;}
+.inputBox{margin-bottom: 2vh;}
+p
+{
+    color: #707070;
+    font-weight: .9em;
+    margin-bottom: .2em;
+}
+input
+{
+    background: rgba(255,255,255,.8);
+    border:none;
+    border-radius: 5px;
+    height: 40px;
+    padding-left: 10px;
+    outline: none;
+    box-shadow: 2px 2px 4px #00000020;
+}
+button
+{
+    text-transform: uppercase;
+    border:none;
+    border-radius: 5px;
+    color:white;
+    height: 36px;
+    line-height: 36px;
+    width: 100px;
+    background: #804004;
+    border-bottom: 4px solid #3D1C0B;
+    cursor:pointer;
+    margin: 2vh 0;
+    box-shadow: 2px 4px 6px #00000020;
+}
+button:hover
+{
+    background: #703803;
+    border-bottom: 3px solid #3D1C0B; 
+    line-height: 38px;
+    box-shadow: 2px 2px 2px #00000020;
+}
+
+img{position: absolute;}
+img[name="torre"]
+{
+    left:0;
+    transform: translateX(-30%);
+    height: 90%;
+    width: auto;
+}
