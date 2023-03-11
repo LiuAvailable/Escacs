@@ -1,5 +1,23 @@
 <section>
-    <div id="equips"></div>
+    <div id="error">
+        No es pot començar la partida si no hi ha 2 equips
+    </div>
+    <div id="error" #error2>
+        Falten dades per crear l'equip
+    </div>
+    <div id="equips">
+        <div class="team" *ngFor="let team of this.teams">
+            <div class="teamName">
+                <h3>{{team.name}}</h3>
+            </div>
+            <div class="players">
+                <div *ngFor="let player of team.integrants" class="player">
+                    <p>Jugador:</p>
+                    <h3>{{player.nom}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="form">
         <form>
@@ -15,8 +33,21 @@
                 <p>jugador 2</p>
                 <input type="text" name="player2" #player2/>
             </div>
-            <button type="button" (click)="this.createTeam(equip.value, player1.value, player2.value)">CREAR</button>
+            <button type="button" (click)="this.createTeam(equip.value, player1.value, player2.value, error2)">CREAR</button>
         </form>
     </div>
 
+    <button id="play" (click)="this.startGame()" >PLAY</button>
 </section>
+
+<!-- <section id="game" class="hide" #gameSection>
+    <button id="close" (click)="this.closeGame(gameSection)">X</button>
+    <div class="gameHeader">
+        <p>Navegador de: </p>
+        <p *ngIf="this.teams.length == 2">{{this.teams[0].name}} - {{this.teams[1].name}}</p>
+    </div>
+    <div id="boards">
+        <app-chees-board class="boardComponent" [variation]="'normal'"></app-chees-board>
+        <app-chees-board class="boardComponent" [variation]="'girat'"></app-chees-board>
+    </div>
+</section> -->
