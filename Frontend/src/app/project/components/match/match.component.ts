@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-match',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./match.component.css']
 })
 export class MatchComponent implements OnInit {
+  player!:string;
+  constructor(private route: ActivatedRoute) { }
 
-  constructor() { }
-
-  ngOnInit(): void {
+  ngOnInit() {
+    this.player = this.route.snapshot.params['player'];
+    console.log('@@@@@');
+    console.log(this.player);
   }
 
 }

@@ -53,8 +53,6 @@ export class CheesBoardComponent {
       if(piece != null){
       if(piece.color == this.torn){
         correct = true;
-        if(piece.color == 'White')this.torn = 'Black';
-        else this.torn = 'White';
       }
     }
     return correct
@@ -71,14 +69,20 @@ export class CheesBoardComponent {
             this.kill(square);
             square.occupy(this.lastSquare.piece)
             this.lastSquare.empty();
+            this.nextTorn(this.lastSquare.piece)
           }
         } else {
+          this.nextTorn(this.lastSquare.piece)
           square.occupy(this.lastSquare.piece)
           this.lastSquare.empty();
         }
       }
     }
     this.lastSquare = undefined;
+  }
+  nextTorn(piece:Piece){
+    if(piece.color == 'White')this.torn = 'Black';
+    else this.torn = 'White';
   }
 
   allowDrop(event:any){

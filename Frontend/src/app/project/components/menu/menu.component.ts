@@ -44,7 +44,7 @@ export class MenuComponent {
     const player = await this.socket.getPlayer();
     console.log('----------')
     console.log(player)
-    // this.router.navigate(['/destino', player]);
+    this.router.navigate(['/match', player]);
   }
 
   closeGame(section:any){
