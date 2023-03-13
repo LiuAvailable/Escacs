@@ -42,8 +42,6 @@ export class MenuComponent {
 
   async getPlayer(){
     const player = await this.socket.getPlayer();
-    console.log('----------')
-    console.log(player)
     this.router.navigate(['/match', player]);
   }
 
@@ -60,6 +58,5 @@ export class MenuComponent {
       error?.classList.remove('active');
     }, 10000);
   }
-
 
 }

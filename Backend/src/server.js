@@ -23,14 +23,25 @@ io.on('connection', (socket) => {
 
   socket.on('start', (teams) => {
     console.log(teams)
-    partida = new Match(4, teams);
-    console.log('New match created with limit 4');
-    socket.emit('start', 'New match created with limit 4');
-    returnPlayer(socket);
+    if(!partida){
+      this.partida = new Match(4, teams);
+      console.log('New match created with limit 4');
+      socket.emit('start', 'New match created with limit 4');
+      console.log(this.partida)
+      returnPlayer(socket, this.partida);
+    }
   })
 
   socket.on('player', () => {
-    returnPlayer(socket);
+    console.log('player');
+    console.log(this.partida);
+    returnPlayer(socket, this.partida);
+  });
+
+  socket.on('teams', () => {
+    console.log('teams ----------');
+    console.log(this.partida)
+    // returnTeams(this.partida.teams);
   });
 
   socket.on('disconnect', () => {
@@ -40,7 +51,7 @@ io.on('connection', (socket) => {
 });
 
 
-function returnPlayer(socket){
+function returnPlayer(socket, partida){
   const connectionId = partida.newConnection();
   console.log(`player: ${connectionId}`);
   socket.emit('player', connectionId);

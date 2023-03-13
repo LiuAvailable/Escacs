@@ -29,7 +29,6 @@ export class CheesGameService {
     this.socket.on('player', (player) => {
       console.log(player);
     });
-
   }
 
   start(teams:Array<Team>){
@@ -40,6 +39,16 @@ export class CheesGameService {
     return new Promise<any>((resolve) => {
       this.socket.on('player', (player) => {
         resolve(player);
+      });
+    });
+  }
+
+  getTeams() {
+    this.socket.emit('teams');
+    return new Promise<any>((resolve) => {
+      this.socket.on('teams', (teams) => {
+        console.log(teams)
+        resolve(teams);
       });
     });
   }
