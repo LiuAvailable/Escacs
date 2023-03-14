@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Team } from '../../model/implementations/Team';
-import { CheesGameService } from '../../services/cheesGame/chees-game.service';
 
 @Component({
   selector: 'app-match',
@@ -10,20 +8,12 @@ import { CheesGameService } from '../../services/cheesGame/chees-game.service';
 })
 export class MatchComponent implements OnInit {
   player!:string;
-  teams!:Array<Team>;
-  constructor(private route: ActivatedRoute, private socket:CheesGameService) {
-    this.getTeams()
-  }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.player = this.route.snapshot.params['player'];
+    console.log('@@@@@');
+    console.log(this.player);
   }
 
-  async getTeams(){
-    console.log('AAAAAAAAA')
-    const teams = await this.socket.getTeams();
-    this.teams = teams;
-    console.log('teams')
-    console.log(this.teams);
-  }
 }
