@@ -12,8 +12,6 @@ export class MatchComponent implements OnInit {
 
   ngOnInit() {
     this.player = this.route.snapshot.params['player'];
-    console.log('@@@@@');
-    console.log(this.player);
   }
 
 }
