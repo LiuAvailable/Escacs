@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
+import { Square } from '../../model/implementations/Square';
 import { Team } from '../../model/implementations/Team';
 
 @Injectable({
@@ -9,6 +10,7 @@ export class CheesGameService {
   started:boolean=false;
 
   socket = io.connect('http://localhost:3000');
+  public objetoRecibido: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() { 
     this.socket.on('connect', () => {
@@ -20,6 +22,12 @@ export class CheesGameService {
         this.socket.emit('player');
         this.getPlayer();
       })
+    
+    this.socket.on('move', (data: any) => {
+      console.log(data)
+      // Emite el evento de objeto recibido y pasa los datos recibidos del socket
+      this.objetoRecibido.emit(data);
+    });
     });
 
     this.socket.on('start', (message) => {
@@ -30,6 +38,11 @@ export class CheesGameService {
       console.log(player);
     });
 
+  }
+
+
+  move(square:Square, lastSquare:Square, variation:string){
+    this.socket.emit('move', ({square, lastSquare, variation}))
   }
 
   start(teams:Array<Team>){

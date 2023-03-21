@@ -3,6 +3,8 @@ import { CheesBoard } from '../../model/implementations/CheesBoard';
 import { Square } from '../../model/implementations/Square';
 import { Graveyard } from '../../model/implementations/Graveyard';
 import { Piece } from '../../model/implementations/Piece';
+import { CheesGameService } from '../../services/cheesGame/chees-game.service';
+import { last } from 'rxjs';
 
 
 @Component({
@@ -18,7 +20,12 @@ export class CheesBoardComponent {
   pieceOrigin!:string;
   torn: string = 'White';
 
-  constructor() {
+  constructor(private socket:CheesGameService) {  }
+
+  ngOnInit() { 
+    this.socket.objetoRecibido.subscribe((data: any) => {
+      this.move(data.square, data.lastSquare, data.variation);
+    });
   }
 
   /**
@@ -47,8 +54,8 @@ export class CheesBoardComponent {
     else this.graveyard[0].kill(peca)
   }
 
-  checkTorn():boolean{
-    const piece = this.lastSquare?.piece;
+  checkTorn(lastSquare:Square):boolean{
+    const piece = lastSquare?.piece;
     let correct = false;
       if(piece != null){
       if(piece.color == this.torn){
@@ -61,25 +68,42 @@ export class CheesBoardComponent {
   /****************
      DRAG EVENTS
   *****************/
-  drop(square:Square) {
-    if(this.checkTorn()){
-      if(this.lastSquare != null){
-        if(square.occupied){
-          if(this.lastSquare.piece.color != square.piece.color){ // enemy piece
-            this.kill(square);
-            square.occupy(this.lastSquare.piece)
-            this.lastSquare.empty();
-            this.nextTorn(this.lastSquare.piece)
+  async drop(square:Square) {
+    if(this.lastSquare != null) this.socket.move(square, this.lastSquare, this.variation)
+    console.log(square);
+    console.log(this.lastSquare);
+    console.log(this.variation);
+  }
+
+  move(square:Square, lastSquare:Square, variation:string){
+    this.cheesBoard.caselles.forEach(row => row.forEach(sq => {
+      if(sq.id == square.id) square = sq;
+      if(sq.id == lastSquare.id) lastSquare = sq;
+    }));
+
+    if(variation == this.variation){
+      console.log('variation')
+      if(this.checkTorn(lastSquare)){
+        console.log('torn')
+        if(lastSquare != null){
+          if(square.occupied){
+            if(lastSquare.piece.color != square.piece.color){ // enemy piece
+              this.kill(square);
+              square.occupy(lastSquare.piece)
+              lastSquare.empty();
+              this.nextTorn(lastSquare.piece)
+            }
+          } else {
+            this.nextTorn(lastSquare.piece)
+            square.occupy(lastSquare.piece)
+            lastSquare.empty();
           }
-        } else {
-          this.nextTorn(this.lastSquare.piece)
-          square.occupy(this.lastSquare.piece)
-          this.lastSquare.empty();
         }
       }
+      this.lastSquare = undefined;
     }
-    this.lastSquare = undefined;
   }
+
   nextTorn(piece:Piece){
     if(piece.color == 'White')this.torn = 'Black';
     else this.torn = 'White';
