@@ -33,6 +33,11 @@ io.on('connection', (socket) => {
     returnPlayer(socket);
   });
 
+  socket.on('move', ({square, lastSquare, variation}) => {
+    console.log(square)
+    io.emit('move', {square, lastSquare, variation})
+  })
+
   socket.on('disconnect', () => {
     console.log('Conexión cerrada');
     connections--;
