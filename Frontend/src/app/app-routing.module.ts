@@ -6,7 +6,7 @@ import { CheesBoardComponent } from './project/components/chees-board/chees-boar
 
 const routes: Routes = [
   { path: '', redirectTo: '/menu', pathMatch: 'full' },
-  {path: 'match/:player', component: MatchComponent},
+  {path: 'match/:player/:color', component: MatchComponent},
   {path: 'menu', component: MenuComponent},
   {path: 'board', component: CheesBoardComponent}
 ];

@@ -4,7 +4,7 @@ import { Square } from '../../model/implementations/Square';
 import { Graveyard } from '../../model/implementations/Graveyard';
 import { Piece } from '../../model/implementations/Piece';
 import { CheesGameService } from '../../services/cheesGame/chees-game.service';
-import { last } from 'rxjs';
+
 
 
 @Component({
@@ -14,6 +14,8 @@ import { last } from 'rxjs';
 })
 export class CheesBoardComponent {
   @Input() variation!: string;
+  @Input() playerColor!:string;
+
   cheesBoard: CheesBoard = new CheesBoard();
   graveyard:Array<Graveyard> = [new Graveyard('White', 2, 8), new Graveyard('Black', 2, 8)];
   lastSquare!:Square | undefined;
@@ -23,6 +25,7 @@ export class CheesBoardComponent {
   constructor(private socket:CheesGameService) {  }
 
   ngOnInit() { 
+    console.log(`AAAAAAAAAAAAAAAAAAAAAA ${this.playerColor}`);
     this.socket.objetoRecibido.subscribe((data: any) => {
       this.move(data.square, data.lastSquare, data.variation);
     });
@@ -57,8 +60,11 @@ export class CheesBoardComponent {
   checkTorn(lastSquare:Square):boolean{
     const piece = lastSquare?.piece;
     let correct = false;
-      if(piece != null){
-      if(piece.color == this.torn){
+    if(piece != null){
+      console.log(`piece.color == ${piece.color}`)
+      console.log(`this.torn == ${this.torn}`)
+      console.log(`this.playerColor == ${this.playerColor}`)
+      if(piece.color == this.torn && this.torn == this.playerColor){
         correct = true;
       }
     }
@@ -69,10 +75,11 @@ export class CheesBoardComponent {
      DRAG EVENTS
   *****************/
   async drop(square:Square) {
-    if(this.lastSquare != null) this.socket.move(square, this.lastSquare, this.variation)
-    console.log(square);
-    console.log(this.lastSquare);
-    console.log(this.variation);
+    if(this.lastSquare != null){
+      if(this.checkTorn(this.lastSquare)) this.socket.move(square, this.lastSquare, this.variation)
+    }
+
+    this.lastSquare = undefined;
   }
 
   move(square:Square, lastSquare:Square, variation:string){
@@ -82,24 +89,21 @@ export class CheesBoardComponent {
     }));
 
     if(variation == this.variation){
-      console.log('variation')
-      if(this.checkTorn(lastSquare)){
-        console.log('torn')
-        if(lastSquare != null){
-          if(square.occupied){
-            if(lastSquare.piece.color != square.piece.color){ // enemy piece
-              this.kill(square);
-              square.occupy(lastSquare.piece)
-              lastSquare.empty();
-              this.nextTorn(lastSquare.piece)
-            }
-          } else {
-            this.nextTorn(lastSquare.piece)
+      if(lastSquare != null){
+        if(square.occupied){
+          if(lastSquare.piece.color != square.piece.color){ // enemy piece
+            this.kill(square);
             square.occupy(lastSquare.piece)
             lastSquare.empty();
+            this.nextTorn(lastSquare.piece)
           }
+        } else {
+          this.nextTorn(lastSquare.piece)
+          square.occupy(lastSquare.piece)
+          lastSquare.empty();
         }
       }
+      
       this.lastSquare = undefined;
     }
   }

@@ -1,6 +1,17 @@
 
-<p>Navegador de: {{this.player}}</p>
+<p>Navegador de: {{this.player}} color: {{this.color}}</p>
+
+<p name="teams">{{this.teams[0].name}} vs {{this.teams[1].name}}</p>
+
+<div>
+    <p name="player">{{this.teams[0].integrants[0]}}</p>
+    <p name="player">{{this.teams[0].integrants[1]}}</p>
+    <p name="player">{{this.teams[1].integrants[0]}}</p>
+    <p name="player">{{this.teams[1].integrants[1]}}</p>
+
+</div>
+
 <section>
-    <app-chees-board class="boardComponent" [variation]="'normal'"></app-chees-board>
-    <app-chees-board class="boardComponent" [variation]="'girat'"></app-chees-board>
+    <app-chees-board class="boardComponent" [variation]="'normal'" [playerColor]="this.playerNum % 2 == 0 ? this.color : '' "></app-chees-board>
+    <app-chees-board class="boardComponent" [variation]="'girat'" [playerColor]="this.playerNum % 2 == 1 ? this.color : '' "></app-chees-board>
 </section>

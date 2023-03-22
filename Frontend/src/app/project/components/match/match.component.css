@@ -3,3 +3,11 @@ section
     display: flex;
     justify-content: space-evenly;
 }
+
+p[name='player']{position:absolute;}
+
+
+p[name='player']:nth-child(3){ left: 10px; top: 20vh;}
+p[name='player']:nth-child(4){ right: 10px; top: 20vh;}
+p[name='player']:nth-child(1){ left: 10px; top: 80vh;}
+p[name='player']:nth-child(2){ right: 10px; top: 80vh;}

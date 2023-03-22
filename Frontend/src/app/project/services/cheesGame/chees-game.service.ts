@@ -8,6 +8,7 @@ import { Team } from '../../model/implementations/Team';
 })
 export class CheesGameService {
   started:boolean=false;
+  teams!:Array<Team>;
 
   socket = io.connect('http://localhost:3000');
   public objetoRecibido: EventEmitter<any> = new EventEmitter<any>();
@@ -35,7 +36,7 @@ export class CheesGameService {
       console.log(message);
     }) 
     this.socket.on('player', (player) => {
-      console.log(player);
+      console.log(player)
     });
 
   }
@@ -52,8 +53,11 @@ export class CheesGameService {
   getPlayer() {
     return new Promise<any>((resolve) => {
       this.socket.on('player', (player) => {
+        console.log(player)
+        this.teams = player[2]
         resolve(player);
       });
     });
   }
+  getTeams(){return this.teams}
 }

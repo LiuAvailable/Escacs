@@ -15,7 +15,7 @@ class Match{
         teams.forEach(team => {
             this.teams.push(new Team(team));
             team.integrants.forEach(integrant => {
-                this.players.push(integrant.nom);
+                this.players.push([integrant.nom, integrant.color]);
             });
         });
         console.log(this.teams)
@@ -23,7 +23,7 @@ class Match{
     }
     newConnection(){
         this.connection++;
-        return this.players[this.connection];
+        return [this.players[this.connection], this.connection, this.teams ];
     }
     
 }

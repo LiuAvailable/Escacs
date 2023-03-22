@@ -23,8 +23,8 @@ export class MenuComponent {
 
       if (this.teams.length < NUM_EQUIPS){
         team = new Team(name);
-        team.newPlayer(new Player(p1));
-        team.newPlayer(new Player(p2));
+        team.newPlayer(new Player(p1, this.teams.length == 0 ? 'White' : 'Black'));
+        team.newPlayer(new Player(p2, this.teams.length == 0 ? 'Black' : 'White'));
         this.teams.push(team);
       }
     }else{
@@ -33,6 +33,7 @@ export class MenuComponent {
         error.classList.remove('active');
       }, 10000);
     }
+    console.log(this.teams)
   }
 
   startGame(){
@@ -43,8 +44,8 @@ export class MenuComponent {
   async getPlayer(){
     const player = await this.socket.getPlayer();
     console.log('----------')
-    console.log(player)
-    this.router.navigate(['/match', player]);
+    console.log(player[0])
+    this.router.navigate(['/match', `${player[0][0]}_${player[1]}`, player[0][1]]);
   }
 
   closeGame(section:any){

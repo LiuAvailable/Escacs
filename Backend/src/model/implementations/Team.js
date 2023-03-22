@@ -1,11 +1,11 @@
 class Team{
     name;
-    players = [];
+    integrants = [];
 
     constructor(team){
         this.name = team.name;
         team.integrants.forEach(integrant => {
-            this.players.push(integrant.nom);
+            this.integrants.push(integrant.nom);
         });
     }
 }
